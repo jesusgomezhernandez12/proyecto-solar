@@ -1,0 +1,294 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000010;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    perspective: 1000px;
+    overflow: hidden;
+}
+
+#stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#scene {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+}
+
+#solar-system {
+    position: absolute;
+    transform-style: preserve-3d;
+    animation: rotateSystem 60s linear infinite;
+}
+
+@keyframes rotateSystem {
+    from { transform: rotateY(0deg) rotateX(15deg); }
+    to { transform: rotateY(360deg) rotateX(15deg); }
+}
+
+.sun {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #fff5a0, #ffcc00, #ff6600);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 60px #ffcc00, 0 0 120px #ff8800, 0 0 180px #ff4400;
+    animation: sunPulse 3s ease-in-out infinite;
+    cursor: pointer;
+    z-index: 100;
+}
+
+@keyframes sunPulse {
+    0%, 100% { box-shadow: 0 0 60px #ffcc00, 0 0 120px #ff8800, 0 0 180px #ff4400; }
+    50% { box-shadow: 0 0 80px #ffcc00, 0 0 150px #ff8800, 0 0 220px #ff4400; }
+}
+
+.orbit {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transform-style: preserve-3d;
+}
+
+.planet-container {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+}
+
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    box-shadow: inset -4px -4px 10px rgba(0,0,0,0.5);
+    transition: transform 0.3s;
+}
+
+.planet:hover {
+    transform: translate(-50%, -50%) scale(1.5);
+    z-index: 50;
+}
+
+.mercury {
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle at 30% 30%, #e0e0e0, #a0a0a0);
+}
+
+.venus {
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle at 30% 30%, #ffe4b5, #daa520);
+}
+
+.earth {
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at 30% 30%, #87ceeb, #228b22, #1e90ff);
+    box-shadow: 0 0 8px rgba(100, 150, 255, 0.6);
+}
+
+.mars {
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #cc3300);
+}
+
+.jupiter {
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle at 30% 30%, #ffe4c4, #d2691e, #8b4513);
+    box-shadow: inset -8px -8px 20px rgba(0,0,0,0.4);
+}
+
+.saturn {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle at 30% 30%, #f4e4bc, #c4a46c, #8b7355);
+}
+
+.uranus {
+    width: 28px;
+    height: 28px;
+    background: radial-gradient(circle at 30% 30%, #e0ffff, #4da6c2);
+}
+
+.neptune {
+    width: 26px;
+    height: 26px;
+    background: radial-gradient(circle at 30% 30%, #4169e1, #00008b);
+    box-shadow: 0 0 8px rgba(65, 105, 225, 0.5);
+}
+
+.rings {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70px;
+    height: 70px;
+    border: 4px solid rgba(210, 180, 140, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotateX(75deg);
+    pointer-events: none;
+    box-shadow: 0 0 0 6px rgba(210, 180, 140, 0.3),
+                0 0 0 10px rgba(210, 180, 140, 0.1);
+}
+
+#info-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(10, 20, 40, 0.9);
+    border: 2px solid #4a90d9;
+    border-radius: 12px;
+    padding: 24px;
+    width: 320px;
+    max-height: 80vh;
+    overflow-y: auto;
+    display: none;
+    box-shadow: 0 0 30px rgba(74, 144, 217, 0.4);
+    backdrop-filter: blur(10px);
+    z-index: 200;
+}
+
+#info-panel.active {
+    display: block;
+}
+
+#info-panel h2 {
+    margin-bottom: 12px;
+    color: #4a90d9;
+    font-size: 1.5em;
+    border-bottom: 1px solid #4a90d9;
+    padding-bottom: 8px;
+}
+
+#info-panel .info-item {
+    margin: 8px 0;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+#info-panel .info-item:last-child {
+    border-bottom: none;
+}
+
+#info-panel .label {
+    color: #88bbee;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+#info-panel .value {
+    color: #ffffff;
+    margin-left: 8px;
+}
+
+#close-panel {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+#close-panel:hover {
+    color: #ff6b6b;
+}
+
+#controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10, 20, 40, 0.85);
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: 1px solid #4a90d9;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    z-index: 200;
+}
+
+#controls label {
+    color: #88bbee;
+    font-size: 0.9em;
+}
+
+#controls input[type="range"] {
+    width: 120px;
+    cursor: pointer;
+}
+
+#controls button {
+    background: #4a90d9;
+    border: none;
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+#controls button:hover {
+    background: #357abd;
+}
+
+#title {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #ffcc00;
+    text-shadow: 0 0 20px rgba(255, 200, 0, 0.6);
+    z-index: 200;
+    letter-spacing: 2px;
+}
+
+.planet-label {
+    position: absolute;
+    color: rgba(255,255,255,0.8);
+    font-size: 10px;
+    white-space: nowrap;
+    pointer-events: none;
+    text-shadow: 0 0 4px rgba(0,0,0,0.8);
+    transform: translate(-50%, -150%);
+}
+
+.orbit-ring {
+    position: absolute;
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
